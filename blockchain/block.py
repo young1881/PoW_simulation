@@ -58,7 +58,23 @@ class Block:
         self.time_stamp = 0
         self.pre_hash = str(0)
 
+    def display(self):
+        print("previous hash is:", self.pre_hash)
+        print("nonce is:", self.nonce)
+        print("time stamp is:", self.time_stamp)
+        print("difficulty is:", self.target)
+        print("hash value is:", self.hash())
+
 
 def gen_genesis():
     genesis = Block(pre_hash=str(0))
     genesis.set_genesis()
+    return genesis
+
+
+if __name__ == "__main__":
+    s = sha256()
+    s.update("hello world".encode("utf-8"))
+    initial_hash = s.hexdigest()
+    new_block = Block(initial_hash)
+    new_block.display()
