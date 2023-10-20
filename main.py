@@ -1,16 +1,19 @@
-# This is a sample Python script.
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+"""
+----------------------------------------
+# @File           :   main1.py
+# @Modify Time    :   2023-10-20 18:18
+# @Author         :   young1881
+# @Description    :
+________________________________________
+"""
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+
+def stimulation(honest_node, evil_node, difficulty):
+    pass
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    stimulation(honest_node=5, evil_node=1, difficulty="0000")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
