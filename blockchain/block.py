@@ -17,7 +17,7 @@ from hashlib import sha256
 
 class Block:
 
-    def __init__(self, pre_hash, target="0000", node_id=-1):
+    def __init__(self, pre_hash, target="00", node_id=-1):
         self.pre_hash = pre_hash
         self.nonce = str(random.randint(0, sys.maxsize))
         self.time_stamp = time.time()
@@ -45,7 +45,7 @@ class Block:
         """
         s = sha256()
         s.update(self.pre_hash.encode("utf-8"))
-        s.update(self.nonce.encode("utf-8"))
+        s.update(nonce.encode("utf-8"))
         s.update(str(self.time_stamp).encode("utf-8"))
         hash_value = s.hexdigest()
         return hash_value.startswith(self.target)

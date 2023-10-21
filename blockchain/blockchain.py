@@ -13,6 +13,7 @@ import random
 import sys
 import time
 
+
 sys.path.append("..")
 
 from blockchain.block import Block, gen_genesis
@@ -21,7 +22,7 @@ from util.simulation import miner_account, mining_time_list
 
 class Blockchain:
 
-    def __init__(self, target="0000"):
+    def __init__(self, target="00"):
         self.chain = []
         self.chain.append(gen_genesis())
         self.target = target
@@ -89,4 +90,6 @@ class Blockchain:
 if __name__ == "__main__":
     chain = Blockchain()
     chain.mining(node_id=0)
-    chain.print()
+    chain.mining(node_id=1)
+    if chain.check():
+        chain.print()

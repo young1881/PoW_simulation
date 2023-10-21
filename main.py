@@ -14,23 +14,23 @@ import threading
 
 from blockchain.blockchain import Blockchain
 from util.simulation import get_evil_node_block
+from util.log import init_log
 
 chain = Blockchain()
 evil_chain = Blockchain()
 hack_flag = False
-max_trial = 5
+max_trial = 20
 miner_account = {}
 
 
 def mining(node_id):
-    logging.info("honest node %d is ready." % node_id)
-    for j in range(0, max_trial):
-        chain.mining(node_id)
+    logging.info("Honest Node %d is ready." % node_id)
+    chain.mining(node_id)
 
 
 def attacking(node_id):
     global hack_flag, chain
-    logging.info("evil node %d is ready." % node_id)
+    logging.info("Evil Node %d is ready." % node_id)
     for j in range(0, max_trial):
         if hack_flag:
             chain.mining(node_id)
@@ -45,18 +45,20 @@ def attacking(node_id):
 
 
 def simulation(honest_node_num, evil_node_num, difficulty):
+    init_log(honest_node_num, evil_node_num, difficulty)
+
     nodes = []
     chain.set_target(difficulty)
-    for i in range(1, honest_node_num):
-        nodes.append(threading.Thread(target=mining, args=(i,)))
-    for i in range(honest_node_num, honest_node_num + evil_node_num):
-        nodes.append(threading.Thread(target=attacking, args=(i,)))
+    for i in range(1, honest_node_num+1):
+        nodes.append(threading.Thread(target=mining, args=[i]))
+    for i in range(honest_node_num+1, honest_node_num + evil_node_num+1):
+        nodes.append(threading.Thread(target=attacking, args=[i]))
 
     i = 1
     # start honest nodes
     for n in nodes:
         n.start()
-        logging.info("node %d starts mining." % (i + 1))
+        logging.info("Node %d starts mining." % (i))
         i = i + 1
 
     for n in nodes:
@@ -64,13 +66,15 @@ def simulation(honest_node_num, evil_node_num, difficulty):
 
     if chain.check():
         chain.print()
-        logging.info("block chain length is: %d", chain.length())
-        logging.info("total evil blocks is: %d" % get_evil_node_block(honest_node_num))
+        logging.info("Current length is: %d", chain.length())
+        logging.info("Total Evil Blocks are: %d" % get_evil_node_block(honest_node_num))
 
     else:
         logging.warning("THE BLOCK CHAIN IS NOT VALID.")
 
+    exit()
+
 
 if __name__ == '__main__':
-    simulation(honest_node_num=3, evil_node_num=0, difficulty="0000")
+    simulation(honest_node_num=10, evil_node_num=1, difficulty="000")
 
