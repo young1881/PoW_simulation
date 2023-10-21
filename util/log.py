@@ -5,7 +5,7 @@
 # @File           :   log.py    
 # @Modify Time    :   2023-10-21 9:49
 # @Author         :   young1881
-# @Description    :   
+# @Description    :   define the log format
 ________________________________________
 """
 

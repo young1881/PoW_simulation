@@ -13,7 +13,6 @@ import random
 import sys
 import time
 
-
 sys.path.append("..")
 
 from blockchain.block import Block, gen_genesis
@@ -38,7 +37,7 @@ class Blockchain:
 
     def mining(self, node_id):
         length = self.length()
-        start_time = time.time()
+        start_time = time.perf_counter()
         new_block = Block(self.latest_block().hash(), self.target, node_id)
         flag = False
 
@@ -56,9 +55,9 @@ class Blockchain:
                     break
 
         if flag:
-            end_time = time.time()
+            end_time = time.perf_counter()
             mining_time = end_time - start_time
-            logging.info("One block is dug out. Its mining time is: %d. "
+            logging.info("One block is dug out. Its mining time is: %f. "
                          "Its miner is %d. " % (mining_time, node_id))
             mining_time_list.append(mining_time)
             if miner_account.get(node_id) is None:

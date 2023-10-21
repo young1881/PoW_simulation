@@ -17,7 +17,7 @@ from hashlib import sha256
 
 class Block:
 
-    def __init__(self, pre_hash, target="00", node_id=-1):
+    def __init__(self, pre_hash, target="000", node_id=-1):
         self.pre_hash = pre_hash
         self.nonce = str(random.randint(0, sys.maxsize))
         self.time_stamp = time.time()
@@ -28,11 +28,11 @@ class Block:
         """
         :return: the hash value of blockchain
         """
-        s = sha256()
-        s.update(self.pre_hash.encode("utf-8"))
-        s.update(self.nonce.encode("utf-8"))
-        s.update(str(self.time_stamp).encode("utf-8"))
-        hash_value = s.hexdigest()
+        sh = sha256()
+        sh.update(self.pre_hash.encode("utf-8"))
+        sh.update(self.nonce.encode("utf-8"))
+        sh.update(str(self.time_stamp).encode("utf-8"))
+        hash_value = sh.hexdigest()
         return hash_value
 
     def check(self):
@@ -43,11 +43,11 @@ class Block:
         :param nonce: the trial nonce while mining
         :return: true if none hash_value less than target
         """
-        s = sha256()
-        s.update(self.pre_hash.encode("utf-8"))
-        s.update(nonce.encode("utf-8"))
-        s.update(str(self.time_stamp).encode("utf-8"))
-        hash_value = s.hexdigest()
+        sh = sha256()
+        sh.update(self.pre_hash.encode("utf-8"))
+        sh.update(nonce.encode("utf-8"))
+        sh.update(str(self.time_stamp).encode("utf-8"))
+        hash_value = sh.hexdigest()
         return hash_value.startswith(self.target)
 
     def set_genesis(self):
@@ -55,7 +55,7 @@ class Block:
         set the block to be genesis
         """
         self.nonce = str(0)
-        self.time_stamp = 0
+        self.time_stamp = time.time()
         self.pre_hash = str(0)
 
     def display(self):
